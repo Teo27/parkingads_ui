@@ -29,7 +29,7 @@ export class LotsService {
   }
 
   public getParkingLots(): Observable<ParkingLot[]>{
-    return this.http.get<ParkingLot[]>('http://83.99.212.50:8182/getLots', this.httpOptions)
+    return this.http.get<ParkingLot[]>('https://83.99.212.50:8182/getLots', this.httpOptions)
   }
 
   public bookLot(parkingLot: ParkingLotBook){
@@ -50,6 +50,6 @@ export class LotsService {
   }
 
   public getAds(): Observable<Ad[]>{
-    return this.http.get<Ad[]>('http://83.99.212.50:8182/getAds', this.httpOptions)
+    return this.http.get<Ad[]>('https://83.99.212.50:8182/getAds', this.httpOptions)
   }
 }
