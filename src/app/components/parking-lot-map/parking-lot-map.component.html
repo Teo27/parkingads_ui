@@ -1,0 +1,38 @@
+<div id="main_panel">
+  <agm-map
+    [latitude]="lat"
+    [longitude]="lng"
+    [zoom]="zoom"
+    [disableDefaultUI]="false"
+    [zoomControl]="false"
+    (mapClick)="mapClicked($event)">
+    <agm-marker-cluster imagePath="https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m">
+      <agm-marker
+        *ngFor="let m of markers; let i = index"
+        (markerClick)="clickedMarker(m.label, i, infoWindow)"
+        [latitude]="m.lat"
+        [longitude]="m.lng"
+        [label]="m.label"
+        [markerDraggable]="m.draggable"
+        (dragEnd)="markerDragEnd(m, $event)">
+
+        <agm-info-window #infoWindow>
+            <form (ngSubmit)="onSubmit()" #parkingLotForm="ngForm">
+                <strong>Name: {{m.lotData.name}}</strong><br>
+                <small>Free Spots: {{m.lotData.free_count}}</small>
+                <br>
+                <input type="email"  name="email" id="email" #email="ngModel" placeholder="Write your email" [(ngModel)]="emailText" required email>
+                <button type="submit" (click)="bookLot(m.lotData);parkingLotForm.reset()" class="btn btn-success btnFix" [disabled]="!parkingLotForm.form.valid">Book</button>
+              </form>
+
+              <span>{{adTitle}}</span>
+              <br>
+              <img src="{{imageURL}}" height="200px" width="200px">
+              <br>
+              <span>{{adText}}</span>
+        </agm-info-window>
+
+      </agm-marker>
+    </agm-marker-cluster>
+  </agm-map>
+</div>
