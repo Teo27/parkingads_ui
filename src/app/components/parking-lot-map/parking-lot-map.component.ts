@@ -20,7 +20,7 @@ export class ParkingLotMapComponent implements OnInit {
   private thumbImgUrl: string = "";
   private thumbAdTitle: string;
 
-  private bannerAdUrl: string = "https://www.bu.edu/globalprograms/files/2015/05/banner-placeholder.png";
+  public bannerAdUrl: string = "https://www.bu.edu/globalprograms/files/2015/05/banner-placeholder.png";
 
   public zoom = 8;
   lat: number;
