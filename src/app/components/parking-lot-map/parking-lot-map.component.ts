@@ -12,12 +12,16 @@ import { Ad} from 'src/app/classes/ad';
 })
 export class ParkingLotMapComponent implements OnInit {
   public markers: Marker[] = [];
-  private ads: Ad[] = []
-  private emailText: string
+  private ads: Ad[] = [];
+  private emailText: string;
   private infoWindow;
-  private adText: string
-  private imageURL: string
-  private adTitle: string
+
+  private thumbAdType: string;
+  private thumbImgUrl: string = "";
+  private thumbAdTitle: string;
+
+  private bannerAdUrl: string = "https://www.bu.edu/globalprograms/files/2015/05/banner-placeholder.png";
+
   public zoom = 8;
   lat: number;
   lng: number;
@@ -45,7 +49,28 @@ export class ParkingLotMapComponent implements OnInit {
   }
 
   getAds(){
-    this.lotsService.getAds().subscribe(data => this.ads= data)
+    this.lotsService.getAds().subscribe(data => {
+
+      var receivedArray = [{}];
+      if(data.hasOwnProperty("ads")) {
+        receivedArray = data["ads"];
+        for(var key in receivedArray) {
+          var incomingAd = receivedArray[key];
+          if(incomingAd.hasOwnProperty("type")) {
+            this.ads.push({
+            "type":incomingAd["type"],
+            "text":incomingAd["text"],
+            "title":incomingAd["title"],
+            "bannerimg":incomingAd["banner-img"],
+            "thumbimg":incomingAd["thumb-img"]
+            });
+          }
+        }
+      }
+      
+      let i = Math.floor(Math.random() * this.ads.length);
+      this.bannerAdUrl = this.ads[i].bannerimg;
+    });
   }
 
   getMarkers() {
@@ -77,13 +102,14 @@ export class ParkingLotMapComponent implements OnInit {
   }
 
   loadAd() {
+    if(this.ads.length > 0) {
+      let i = Math.floor(Math.random() * this.ads.length);
+      this.thumbAdType = this.ads[i].type;
+      this.thumbImgUrl = this.ads[i].thumbimg;
+      this.thumbAdTitle = this.ads[i].title;
+      console.log(this.ads[i]);
+    }
     
-    let i = Math.floor(Math.random() * this.ads['ads'].length)
-    console.log(i)
-    this.adText = this.ads['ads'][i].text
-    this.imageURL = this.ads['ads'][i].img
-    this.adTitle = this.ads['ads'][i].title
-    console.log(this.ads['ads'][i])
     
     //throw new Error("Method not implemented.");
   }

@@ -50,6 +50,9 @@ export class LotsService {
   }
 
   public getAds(): Observable<Ad[]>{
-    return this.http.get<Ad[]>('https://83.99.212.50:8182/getAds', this.httpOptions)
+    console.log("getting ads");
+    var ads = this.http.get<Ad[]>('https://83.99.212.50:8182/getAds', this.httpOptions);
+    console.log(ads);
+    return ads;
   }
 }

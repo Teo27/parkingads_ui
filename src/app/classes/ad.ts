@@ -1,5 +1,7 @@
 export class Ad{
     title: string
-    img: string
+    bannerimg: string
+    thumbimg: string
     text: string
-}
+    type: string
+};

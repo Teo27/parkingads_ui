@@ -14,8 +14,9 @@ export class AdsComponent implements OnInit {
   constructor(private adsService: AdsService) { }
 
   ngOnInit() {
+  	console.log("ADS:");
     this.ads$ = this.adsService.ads;
-    console.log('test')
+    console.log('test');
   }
 
 }

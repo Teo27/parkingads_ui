@@ -18,11 +18,14 @@ export class AdsService {
   //https://blog.thoughtram.io/angular/2018/03/05/advanced-caching-with-rxjs.html
   
   get ads() {
+    console.log("ADS pre:");
     if (!this.cache$) {
       this.cache$ = this.requestAds().pipe(
         shareReplay(CACHE_SIZE)
       );
     }
+    console.log("ADS:");
+    console.log(this.cache$);
 
     return this.cache$;
   }

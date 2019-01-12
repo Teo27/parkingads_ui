@@ -17,22 +17,25 @@
         (dragEnd)="markerDragEnd(m, $event)">
 
         <agm-info-window #infoWindow>
-            <form (ngSubmit)="onSubmit()" #parkingLotForm="ngForm">
-                <strong>Name: {{m.lotData.name}}</strong><br>
+            <div class="marker-info-window-content">
+              <form (ngSubmit)="onSubmit()" #parkingLotForm="ngForm">
+                <strong>Location: {{m.lotData.name}}</strong><br>
                 <small>Free Spots: {{m.lotData.free_count}}</small>
                 <br>
-                <input type="email"  name="email" id="email" #email="ngModel" placeholder="Write your email" [(ngModel)]="emailText" required email>
+                <input type="email"  name="email" id="email" #email="ngModel" placeholder="youremail@email.com" [(ngModel)]="emailText" required email>
                 <button type="submit" (click)="bookLot(m.lotData);parkingLotForm.reset()" class="btn btn-success btnFix" [disabled]="!parkingLotForm.form.valid">Book</button>
               </form>
-
-              <span>{{adTitle}}</span>
-              <br>
-              <img src="{{imageURL}}" height="200px" width="200px">
-              <br>
-              <span>{{adText}}</span>
+              <div *ngIf="thumbImgUrl.length > 0" style="margin-top: .7em;">
+                <small> Advertisement:</small>
+                <img src="{{thumbImgUrl}}" width="100%" alt="{{thumbAdTitle}}">
+              </div>
+            </div>
         </agm-info-window>
 
       </agm-marker>
     </agm-marker-cluster>
   </agm-map>
+  <div class="bottom-banner-content">
+    <img src={{bannerAdUrl}}>
+  </div>
 </div>
