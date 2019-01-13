@@ -61,8 +61,8 @@ export class ParkingLotMapComponent implements OnInit {
             "type":incomingAd["type"],
             "text":incomingAd["text"],
             "title":incomingAd["title"],
-            "bannerimg":incomingAd["banner-img"],
-            "thumbimg":incomingAd["thumb-img"]
+            "bannerimg":incomingAd["bannerimg"],
+            "thumbimg":incomingAd["thumbimg"]
             });
           }
         }
