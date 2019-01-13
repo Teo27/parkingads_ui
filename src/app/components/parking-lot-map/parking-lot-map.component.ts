@@ -4,6 +4,7 @@ import {Marker} from '../../classes/marker';
 import {LotsService} from '../../services/lots.service';
 import { ParkingLot, ParkingLotBook } from 'src/app/classes/parking-lot';
 import { Ad} from 'src/app/classes/ad';
+import {NotifierService} from 'angular-notifier';
 
 @Component({
   selector: 'app-parking-lot-map',
@@ -20,6 +21,8 @@ export class ParkingLotMapComponent implements OnInit {
   private thumbImgUrl: string = "";
   private thumbAdTitle: string;
 
+  private notifier: NotifierService;
+
   public bannerAdUrl: string = "https://www.bu.edu/globalprograms/files/2015/05/banner-placeholder.png";
 
   public zoom = 8;
@@ -27,13 +30,14 @@ export class ParkingLotMapComponent implements OnInit {
   lng: number;
 
   @ViewChild(AgmMap) agmMap: AgmMap;
-  constructor(private lotsService: LotsService) {
+  constructor(private lotsService: LotsService, notifierService: NotifierService) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.setStartPosition.bind(this));
     } else {
       this.lat = 0;
       this.lng = 0;
     }
+    this.notifier = notifierService;
   }
 
   setStartPosition(position): void {
@@ -43,9 +47,29 @@ export class ParkingLotMapComponent implements OnInit {
 
   ngOnInit() {
     //this.getMarkers();
-    this.getParkingLots()
-    this.getAds()
+    this.getParkingLots();
+    this.getAds();
+  }
 
+  /**
+   * Hide oldest notification
+   */
+  hideOldestNotification(): void {
+      this.notifier.hideOldest();
+  }
+
+  /**
+   * Hide newest notification
+   */
+  hideNewestNotification(): void {
+      this.notifier.hideNewest();
+  }
+
+  /**
+   * Hide all notifications at once
+   */
+  hideAllNotifications(): void {
+      this.notifier.hideAll();
   }
 
   getAds(){
@@ -126,6 +150,12 @@ export class ParkingLotMapComponent implements OnInit {
   }
 
   bookLot(parkingLot: ParkingLot){
+
+    if(parkingLot.free_count < 1) {
+      this.notifier.notify("error", "Parking lot has no more free places");
+      return;
+    }
+
     console.log(parkingLot);
     console.log(this.emailText);
     let booking = new ParkingLotBook;
@@ -139,7 +169,10 @@ export class ParkingLotMapComponent implements OnInit {
     booking.free_count = parkingLot.free_count;
     booking.email = this.emailText;
 
-    this.lotsService.bookLot(booking).subscribe()
+    this.lotsService.bookLot(booking).subscribe();
+
+    this.notifier.notify("success", "Parking lot succesfully booked");
+    this.emailText = "";
   }
 
 }

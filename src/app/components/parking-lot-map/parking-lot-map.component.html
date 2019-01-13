@@ -18,12 +18,16 @@
 
         <agm-info-window #infoWindow>
             <div class="marker-info-window-content">
-              <form (ngSubmit)="onSubmit()" #parkingLotForm="ngForm">
+              <form #parkingLotForm="ngForm">
                 <strong>Location: {{m.lotData.name}}</strong><br>
                 <small>Free Spots: {{m.lotData.free_count}}</small>
                 <br>
-                <input type="email"  name="email" id="email" #email="ngModel" placeholder="youremail@email.com" [(ngModel)]="emailText" required email>
-                <button type="submit" (click)="bookLot(m.lotData);parkingLotForm.reset()" class="btn btn-success btnFix" [disabled]="!parkingLotForm.form.valid">Book</button>
+                <div style="display: flex;">
+                    <input type="email" class="form-control" name="email" id="email" #email="ngModel" placeholder="youremail@email.com" [(ngModel)]="emailText" required email>
+                    <button type="submit" (click)="bookLot(m.lotData);" class="btn btn-success btnFix" [disabled]="!parkingLotForm.form.valid"><fa name="angle-right"></fa></button>
+                </div>
+                
+                
               </form>
               <div *ngIf="thumbImgUrl != undefined && thumbImgUrl.length > 0" style="margin-top: .7em;">
                 <small> Advertisement:</small>
