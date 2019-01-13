@@ -25,7 +25,7 @@
                 <input type="email"  name="email" id="email" #email="ngModel" placeholder="youremail@email.com" [(ngModel)]="emailText" required email>
                 <button type="submit" (click)="bookLot(m.lotData);parkingLotForm.reset()" class="btn btn-success btnFix" [disabled]="!parkingLotForm.form.valid">Book</button>
               </form>
-              <div *ngIf="thumbImgUrl.length > 0" style="margin-top: .7em;">
+              <div *ngIf="thumbImgUrl != undefined && thumbImgUrl.length > 0" style="margin-top: .7em;">
                 <small> Advertisement:</small>
                 <img src="{{thumbImgUrl}}" width="100%" alt="{{thumbAdTitle}}">
               </div>

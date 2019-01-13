@@ -126,11 +126,19 @@ export class ParkingLotMapComponent implements OnInit {
   }
 
   bookLot(parkingLot: ParkingLot){
-    console.log(parkingLot)
-    console.log(this.emailText)
-    let booking = new ParkingLotBook
-    booking = parkingLot
-    booking.email = this.emailText
+    console.log(parkingLot);
+    console.log(this.emailText);
+    let booking = new ParkingLotBook;
+
+    booking.lotname = parkingLot.name;
+    booking.is_open = parkingLot.is_open;
+    booking.is_payment_active = parkingLot.is_payment_active;
+    booking.lat = parkingLot.latitude;
+    booking.lng = parkingLot.longitude;
+    booking.max_count = parkingLot.max_count;
+    booking.free_count = parkingLot.free_count;
+    booking.email = this.emailText;
+
     this.lotsService.bookLot(booking).subscribe()
   }
 

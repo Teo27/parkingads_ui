@@ -10,12 +10,12 @@ export class ParkingLot{
 }
 
 export class ParkingLotBook{
-    name: string
+    lotname: string
     is_open: boolean
     is_payment_active: boolean
     status_park_place: boolean
-    longitude: number
-    latitude: number
+    lat: number
+    lng: number
     max_count: number
     free_count: number
     email?: string

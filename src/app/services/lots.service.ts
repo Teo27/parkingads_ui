@@ -33,7 +33,7 @@ export class LotsService {
   }
 
   public bookLot(parkingLot: ParkingLotBook){
-    return this.http.post('', parkingLot, this.httpOptions).pipe(
+    return this.http.post('https://83.99.212.50:8182/saveBooking', parkingLot, this.httpOptions).pipe(
       catchError(this.handleError('bookLot', [])))
   }
 
