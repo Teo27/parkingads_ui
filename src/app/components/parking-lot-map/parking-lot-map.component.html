@@ -5,6 +5,7 @@
     [zoom]="zoom"
     [disableDefaultUI]="false"
     [zoomControl]="false"
+    [minZoom]="12"
     (mapClick)="mapClicked($event)">
     <agm-marker-cluster imagePath="https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m">
       <agm-marker
@@ -24,7 +25,7 @@
                 <br>
                 <div style="display: flex;">
                     <input type="email" class="form-control" name="email" id="email" #email="ngModel" placeholder="youremail@email.com" [(ngModel)]="emailText" required email>
-                    <button type="submit" (click)="bookLot(m.lotData);parkingLotForm.reset()" class="btn btn-success btnFix" [disabled]="!parkingLotForm.form.valid"><fa name="angle-right"></fa></button>
+                    <button type="button" (click)="bookLot(m.lotData);parkingLotForm.reset()" class="btn btn-success btnFix" [disabled]="!parkingLotForm.form.valid"><fa name="angle-right"></fa></button>
                 </div>
               </form>
               <div *ngIf="thumbImgUrl != undefined && thumbImgUrl.length > 0" style="margin-top: .7em;">
@@ -39,5 +40,6 @@
   </agm-map>
   <div class="bottom-banner-content">
     <img *ngIf="bannerAdType == 'link'" src="{{bannerAdUrl}}">
+    <!-- <img *ngIf="bannerAdType == 'base64'" src="data:image/png;base64, {{safeBannerAdUrl | sanitizeUrl}}"> -->
   </div>
 </div>

@@ -28,7 +28,7 @@ export class ParkingLotMapComponent implements OnInit {
   public bannerAdType: string;
   public bannerAdUrl: string = "https://www.bu.edu/globalprograms/files/2015/05/banner-placeholder.png";
 
-  public zoom = 8;
+  public zoom = 13;
   lat: number;
   lng: number;
 
@@ -76,8 +76,14 @@ export class ParkingLotMapComponent implements OnInit {
   }
 
   getAds(){
+    var date = new Date();
+    var timestamp = date.getTime();
+    console.log(timestamp);
     this.lotsService.getAds().subscribe(data => {
 
+      var date = new Date();
+      var timestamp = date.getTime();
+      console.log(timestamp);
       var receivedArray = [{}];
       if(data.hasOwnProperty("ads")) {
         receivedArray = data["ads"];
