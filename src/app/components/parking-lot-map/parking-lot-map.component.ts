@@ -5,6 +5,8 @@ import {LotsService} from '../../services/lots.service';
 import { ParkingLot, ParkingLotBook } from 'src/app/classes/parking-lot';
 import { Ad} from 'src/app/classes/ad';
 import {NotifierService} from 'angular-notifier';
+import {Pipe, PipeTransform} from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser'
 
 @Component({
   selector: 'app-parking-lot-map',
@@ -23,6 +25,7 @@ export class ParkingLotMapComponent implements OnInit {
 
   private notifier: NotifierService;
 
+  public bannerAdType: string;
   public bannerAdUrl: string = "https://www.bu.edu/globalprograms/files/2015/05/banner-placeholder.png";
 
   public zoom = 8;
@@ -30,7 +33,7 @@ export class ParkingLotMapComponent implements OnInit {
   lng: number;
 
   @ViewChild(AgmMap) agmMap: AgmMap;
-  constructor(private lotsService: LotsService, notifierService: NotifierService) {
+  constructor(private lotsService: LotsService, notifierService: NotifierService, private sanitizer: DomSanitizer) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.setStartPosition.bind(this));
     } else {
@@ -78,6 +81,7 @@ export class ParkingLotMapComponent implements OnInit {
       var receivedArray = [{}];
       if(data.hasOwnProperty("ads")) {
         receivedArray = data["ads"];
+        receivedArray.length = 5;
         for(var key in receivedArray) {
           var incomingAd = receivedArray[key];
           if(incomingAd.hasOwnProperty("type")) {
@@ -94,6 +98,8 @@ export class ParkingLotMapComponent implements OnInit {
       
       let i = Math.floor(Math.random() * this.ads.length);
       this.bannerAdUrl = this.ads[i].bannerimg;
+      
+      this.bannerAdType = this.ads[i].type;
     });
   }
 
@@ -171,8 +177,7 @@ export class ParkingLotMapComponent implements OnInit {
 
     this.lotsService.bookLot(booking).subscribe();
 
-    this.notifier.notify("success", "Parking lot succesfully booked");
-    this.emailText = "";
+    this.notifier.notify("success", "Request sent, confirmation email incoming");
   }
 
 }
